@@ -77,7 +77,19 @@ public class Assinante {
      */
     public Engajamento classificacaoEngajamento() {
         //TODO Tarefa 2
-        return Engajamento.INICIANTE;
+        if(tempoTotalAssistido() >600){
+            return Engajamento.NAOPAGA;
+        }else{
+            if (tempoTotalAssistido()/(tempoTotalAssistido() + creditoDeTempo())<= 0.1) {
+                return Engajamento.INICIANTE;
+            }else if (tempoTotalAssistido()/(tempoTotalAssistido() + creditoDeTempo())<=0.5){
+                return Engajamento.REGULAR;
+            }else if(tempoTotalAssistido()/(tempoTotalAssistido() + creditoDeTempo())<=0.75){
+                return Engajamento.ENGAJADO;
+            }else{
+                return Engajamento.BINGE;
+            }
+        }
     }
 
     /**
@@ -85,8 +97,7 @@ public class Assinante {
      * caso contrário, TARIFA_BASE multiplicada pelo fator da classificação.
      */
     public double tarifaMensal() {
-        //TODO Tarefa 3
-        return 0.0;
+        return TARIFA_BASE * classificacaoEngajamento().getTaxaAplicada();
     }
 
     public String resumo() {
